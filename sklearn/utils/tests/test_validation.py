@@ -2269,6 +2269,21 @@ def test_column_or_1d():
                 column_or_1d(y)
 
 
+def test_column_or_1d_with_pandas_string_dtype():
+    """Check that column_or_1d works with pandas StringDtype.
+
+    Non-regression test for:
+    https://github.com/scikit-learn/scikit-learn/issues/33383
+    """
+    pd = pytest.importorskip("pandas")
+
+    # Enable string dtype inference for pandas 2.x compatibility
+    with pd.option_context("future.infer_string", True):
+        df = pd.DataFrame({"y": ["a", "b", "a", "c"]})
+        result = column_or_1d(df["y"], dtype=df["y"].dtype)
+        assert result.shape == (4,)
+
+
 def test_check_array_writeable_np():
     """Check the behavior of check_array when a writeable array is requested
     without copy if possible, on numpy arrays.
