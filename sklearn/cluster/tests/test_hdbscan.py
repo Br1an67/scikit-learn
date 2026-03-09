@@ -366,10 +366,12 @@ def test_hdbscan_cluster_selection_epsilon():
     """
     rng = np.random.default_rng(0)
 
-    X = np.vstack([
-        rng.normal(0, 0.2, size=(20, 2)),
-        rng.normal(1, 0.2, size=(21, 2)),
-    ])
+    X = np.vstack(
+        [
+            rng.normal(0, 0.2, size=(20, 2)),
+            rng.normal(1, 0.2, size=(21, 2)),
+        ]
+    )
 
     # This used to raise TypeError due to array vs scalar comparison
     hdb = HDBSCAN(
